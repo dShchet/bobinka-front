@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+:root {
+    --dp-menu-min-width: 100% !important;
+}
+
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+.v-snackbar__content {
+    font-size: 1.2rem !important;
+}
+
+.v-messages__message {
+    line-height: 18px;
+    font-size: .95rem !important;
+}
+
+.mb-20 {
+    margin-bottom: 20% !important;
+}
+
+.mb-70 {
+    margin-bottom: 70% !important;
+}
+
+.fast-filter-checkbox .v-label {
+    @media screen and (max-width: 600px) {
+        font-size: .9rem !important;
+    }
+}
+
+.profile-checkbox .v-label {
+    color: var(--tg-theme-text-color, rgb(var(--v-theme-on-surface)));
+    opacity: 1 !important;
+}
+
+.fire, .sale-backlight {
+    width: fit-content;
+    position: relative;
+    z-index: 2;
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        background-size: 400%;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        z-index: -1;
+        animation: steam 20s linear infinite;
+        border-radius: 7px;
+    }
+
+    &:after {
+        filter: blur(10px);
+    }
+
+    @keyframes steam {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 400% 0;
+        }
+        100% {
+            background-position: 0 0;
+        }
+    }
+}
+
+.fire, .fire.sale-backlight {
+    &:before, &:after {
+        background: linear-gradient(45deg, #ff0000, #ff9e00, #ff0000, #ff9e00, #ff0000);
+    }
+}
+
+.sale-backlight {
+    &:before, &:after {
+        background: linear-gradient(45deg, #00bbff, #00ff13, #00bbff, #00ff13, #00bbff);
+    }
+}
+
+.fast-filter-checkbox .v-selection-control {
+    width: fit-content;
+    @media screen and (min-width: 600px) {
+        justify-content: center;
+    }
+}
+
+.dp__active_date, {
+    background-color: var(--tg-theme-button-color, rgb(var(--v-theme-primary))) !important;
+    color: var(--tg-theme-button-text-color, rgb(var(--v-theme-on-primary))) !important;
+}
+
+.dp__today {
+    border-color: var(--tg-theme-button-color, rgb(var(--v-theme-primary))) !important;
+}
+
+.not-sale-price {
+    background-image: linear-gradient(to bottom right, transparent 45%, var(--tg-theme-text-color, rgb(var(--v-theme-on-surface))), transparent 54%);
+    background-repeat: no-repeat;
+    text-align: center;
+    margin-right: 5px;
+}

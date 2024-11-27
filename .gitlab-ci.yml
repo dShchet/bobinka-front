@@ -1,0 +1,51 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+
+build_webapp:
+  image: docker:20.10.16
+  stage: build
+
+  only:
+    - dev
+
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - cp ${WEBAPP_ENV} .env
+  script:
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - docker push $TAG_LATEST
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+
+  only:
+    - dev
+
+  variables:
+    PROJECT_PATH: "~/bobinka/webapp-dev"
+
+  before_script:
+    - apk update && apk add openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$ID_RSA" | tr -d "\r" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -t rsa $SERVER_IP > ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 644 ~/.ssh/known_hosts
+
+  script:
+    - scp docker-compose.yaml $SERVER_USER@$SERVER_IP:$PROJECT_PATH/docker-compose.yaml
+    - ssh $SERVER_USER@$SERVER_IP "docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY"
+    - ssh $SERVER_USER@$SERVER_IP "docker compose -f $PROJECT_PATH/docker-compose.yaml --profile webapp pull"
+    - ssh $SERVER_USER@$SERVER_IP "docker compose -f $PROJECT_PATH/docker-compose.yaml --profile webapp up -d"

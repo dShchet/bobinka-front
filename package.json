@@ -1,0 +1,40 @@
+{
+  "name": "web_app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.3.67",
+    "@vuepic/vue-datepicker": "^7.4.0",
+    "ky": "^1.0.1",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
+    "pinia": "^2.1.7",
+    "scule": "^1.0.0",
+    "vue": "^3.3.8",
+    "vue-draggable-plus": "^0.3.2",
+    "vue-lodash": "^2.1.2",
+    "vue-router": "^4.2.5",
+    "vue-tg": "^0.1.1",
+    "vuetify": "^3.3.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202",
+    "@types/lodash-es": "^4.17.12",
+    "@types/lodash.merge": "^4.6.9",
+    "@types/node": "^20.9.0",
+    "@types/vue": "^2.0.0",
+    "@vitejs/plugin-vue": "^4.4.1",
+    "eruda": "^3.0.1",
+    "sass": "^1.69.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vite-plugin-mkcert": "^1.16.0",
+    "vue-tsc": "^1.8.22"
+  }
+}

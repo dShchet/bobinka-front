@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  webapp:
+    profiles: ["webapp"]
+    container_name: "${WEBAPP_CONTAINER_NAME:-bobinka_shop.webapp}"
+    image: "${WEBAPP_IMAGE_NAME:-bobinka_shop.webapp}"
+    build:
+      context: .
+    ports:
+      - "${VITE_PORT}:${VITE_PORT}"
+    restart: unless-stopped
+    stop_signal: SIGINT
+    command: ["npm", "run", "preview"]
